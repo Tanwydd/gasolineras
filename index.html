@@ -429,11 +429,9 @@
         <thead>
           <tr>
             <th data-col="nombre">Nombre</th>
-            <th data-col="dir" class="col-dir">Dirección</th>
             <th data-col="municipio">Municipio</th>
-            <th data-col="provincia" class="col-prov">Provincia</th>
-            <th data-col="g95">Gasolina 95</th>
             <th data-col="diesel">Gasóleo A</th>
+            <th data-col="g95">Gasolina 95</th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
@@ -638,44 +636,50 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 // Almacenamos el array ordenado actual para el click
 let currentSorted = [];
 
-const origRender = render;
 function render() {
   const filtered = getFiltered();
   updateStats(filtered);
   document.getElementById('filter-count').innerHTML = `<b>${filtered.length.toLocaleString('es')}</b> estaciones`;
 
-  currentSorted = [...filtered].sort((a,b) => {
-    const va=sortVal(a,sortCol), vb=sortVal(b,sortCol);
-    return va<vb?-sortDir:va>vb?sortDir:0;
+  currentSorted = [...filtered].sort((a, b) => {
+    const va = sortVal(a, sortCol), vb = sortVal(b, sortCol);
+    return va < vb ? -sortDir : va > vb ? sortDir : 0;
   });
 
-  const min95     = Math.min(...filtered.map(d=>parsePrice(d['Precio Gasolina 95 E5'])??99999));
-  const minDiesel = Math.min(...filtered.map(d=>parsePrice(d['Precio Gasoleo A'])??99999));
+  const min95     = Math.min(...filtered.map(d => parsePrice(d['Precio Gasolina 95 E5']) ?? 99999));
+  const minDiesel = Math.min(...filtered.map(d => parsePrice(d['Precio Gasoleo A']) ?? 99999));
 
   const tbody = document.getElementById('tbody');
   tbody.innerHTML = '';
+
   currentSorted.forEach((d, i) => {
     const p95 = parsePrice(d['Precio Gasolina 95 E5']);
     const pd  = parsePrice(d['Precio Gasoleo A']);
-    const g95html    = p95!==null ? `<span class="tag-g95${p95===min95?' best':''}">${p95===min95?'⭐ ':''}${p95.toFixed(3)} €</span>` : `<span class="vacio">—</span>`;
-    const dieselHtml = pd!==null  ? `<span class="tag-diesel${pd===minDiesel?' best':''}">${pd===minDiesel?'⭐ ':''}${pd.toFixed(3)} €</span>` : `<span class="vacio">—</span>`;
+
+    const g95html = p95 !== null
+      ? `<span class="tag-g95${p95 === min95 ? ' best' : ''}">${p95 === min95 ? '⭐ ' : ''}${p95.toFixed(3)} €</span>`
+      : `<span class="vacio">—</span>`;
+
+    const dieselHtml = pd !== null
+      ? `<span class="tag-diesel${pd === minDiesel ? ' best' : ''}">${pd === minDiesel ? '⭐ ' : ''}${pd.toFixed(3)} €</span>`
+      : `<span class="vacio">—</span>`;
+
     const tr = document.createElement('tr');
     tr.style.cursor = 'pointer';
-    tr.title = 'Ver detalle';
+    tr.title = 'Pulsa para ver todos los combustibles';
     tr.innerHTML = `
-      <td class="cell-nombre" title="${d['Rótulo']||''}">${(d['Rótulo']||'').trim()||'—'}</td>
-      <td class="col-dir" title="${d['Dirección']||''}">${(d['Dirección']||'').trim()||'—'}</td>
-      <td>${(d['Municipio']||'').trim()}</td>
-      <td class="col-prov">${(d['Provincia']||'').trim()}</td>
-      <td>${g95html}</td>
-      <td>${dieselHtml}</td>`;
+      <td class="cell-nombre" title="${d['Rótulo'] || ''}">${(d['Rótulo'] || '').trim() || '—'}</td>
+      <td>${(d['Municipio'] || '').trim()}</td>
+      <td>${dieselHtml}</td>
+      <td>${g95html}</td>`;
+
     tr.addEventListener('click', () => openModal(currentSorted[i]));
     tbody.appendChild(tr);
   });
 }
 
 fetchData();
-setInterval(fetchData, 30*60*1000);
+setInterval(fetchData, 30 * 60 * 1000);
 </script>
 </body>
 </html>
