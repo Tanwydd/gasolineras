@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carburantes & Recarga Eléctrica · España</title>
+<title>Carburantes España</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,10 +34,9 @@
     box-shadow: 0 4px 32px rgba(99,102,241,0.07), 0 1px 3px rgba(0,0,0,0.04);
   }
 
-  /* HEADER */
   header {
     display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px; margin-bottom: 20px;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 24px;
   }
   .header-left { display: flex; align-items: center; gap: 14px; }
   .logo-icon {
@@ -56,29 +55,6 @@
   .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.85)} }
 
-  /* TABS */
-  .tabs {
-    display: flex; gap: 4px; margin-bottom: 16px;
-    background: rgba(255,255,255,0.5); border-radius: 14px; padding: 4px;
-    border: 1px solid rgba(255,255,255,0.85);
-    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-    width: fit-content;
-  }
-  .tab {
-    font-family: inherit; font-size: 13px; font-weight: 600;
-    padding: 9px 20px; border-radius: 10px; border: none;
-    background: transparent; color: #6b7280; cursor: pointer;
-    transition: all .18s; display: flex; align-items: center; gap: 7px;
-  }
-  .tab:hover { color: #4f46e5; background: rgba(99,102,241,0.06); }
-  .tab.active {
-    background: white; color: #4f46e5;
-    box-shadow: 0 2px 12px rgba(99,102,241,0.12), 0 1px 2px rgba(0,0,0,0.05);
-  }
-  .tab.active.ev { color: #16a34a; }
-  .tab-icon { font-size: 16px; }
-
-  /* FILTROS */
   .panel { border-radius: 18px; padding: 18px 20px; margin-bottom: 14px; }
   .panel-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 12px; }
   .filters-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
@@ -96,7 +72,6 @@
   .filter-info { font-size: 13px; color: #6b7280; font-weight: 500; align-self: center; white-space: nowrap; }
   .filter-info b { color: #6366f1; }
 
-  /* TABLA */
   .table-panel { border-radius: 18px; overflow: hidden; margin-bottom: 20px; }
   .table-toolbar {
     display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
@@ -111,7 +86,6 @@
   .pill:hover { border-color: #6366f1; color: #6366f1; background: rgba(99,102,241,0.05); }
   .pill.active { background: linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff; border-color:transparent; box-shadow: 0 2px 10px rgba(99,102,241,0.3); }
   .pill.active-orange { background: linear-gradient(135deg,#f97316,#ea580c); color:#fff; border-color:transparent; box-shadow: 0 2px 10px rgba(249,115,22,0.3); }
-  .pill.active-green { background: linear-gradient(135deg,#16a34a,#15803d); color:#fff; border-color:transparent; box-shadow: 0 2px 10px rgba(22,163,74,0.3); }
 
   .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -133,7 +107,6 @@
   tbody tr:last-child td { border-bottom: none; }
   .cell-nombre { font-weight: 600; color: #111827; }
 
-  /* BADGES COMBUSTIBLE */
   .tag-g95 {
     display: inline-flex; align-items: center; gap: 3px; padding: 3px 10px; border-radius: 50px;
     font-size: 12px; font-weight: 700; color: #15803d; background: rgba(22,163,74,0.1);
@@ -146,21 +119,6 @@
   .tag-diesel.best { background: rgba(234,88,12,0.16); box-shadow: 0 0 0 1.5px rgba(234,88,12,0.28); }
   .vacio { color: #d1d5db; font-weight: 400; }
 
-  /* BADGES EV */
-  .tag-ev {
-    display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 50px;
-    font-size: 12px; font-weight: 700;
-  }
-  .tag-ev.fast    { color: #15803d; background: rgba(22,163,74,0.1); }
-  .tag-ev.rapid   { color: #2563eb; background: rgba(37,99,235,0.1); }
-  .tag-ev.slow    { color: #6b7280; background: rgba(107,114,128,0.1); }
-  .tag-ev.unknown { color: #9ca3af; background: rgba(156,163,175,0.08); }
-
-  .tag-status-ok  { color: #15803d; font-size: 11px; font-weight: 600; }
-  .tag-status-err { color: #dc2626; font-size: 11px; font-weight: 600; }
-  .tag-status-unk { color: #9ca3af; font-size: 11px; font-weight: 600; }
-
-  /* LOADING / ERROR */
   .loading {
     display: flex; flex-direction: column; align-items: center;
     justify-content: center; padding: 80px 24px; gap: 16px; color: #9ca3af;
@@ -190,7 +148,7 @@
     background: rgba(255,255,255,0.95); backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     border: 1px solid rgba(255,255,255,0.95);
     box-shadow: 0 24px 80px rgba(99,102,241,0.18), 0 2px 8px rgba(0,0,0,0.06);
-    border-radius: 24px; width: 100%; max-width: 540px; max-height: 90vh;
+    border-radius: 24px; width: 100%; max-width: 520px; max-height: 90vh;
     display: flex; flex-direction: column;
     transform: translateY(16px) scale(0.98);
     transition: transform .22s cubic-bezier(.34,1.56,.64,1); overflow: hidden;
@@ -215,7 +173,6 @@
     font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 50px;
     background: rgba(99,102,241,0.07); color: #4f46e5; border: 1px solid rgba(99,102,241,0.12);
   }
-  .meta-tag.green { background: rgba(22,163,74,0.08); color: #15803d; border-color: rgba(22,163,74,0.2); }
   .modal-body { padding: 16px 24px; overflow-y: auto; flex: 1; }
   .fuel-section-title {
     font-size: 10px; font-weight: 700; text-transform: uppercase;
@@ -234,18 +191,6 @@
   .fp-blue   { color: #2563eb; }
   .fp-purple { color: #7c3aed; }
   .fp-gray   { color: #6b7280; }
-
-  /* EV connector list */
-  .connector-list { display: flex; flex-direction: column; gap: 8px; }
-  .connector-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px; border-radius: 12px;
-    background: rgba(255,255,255,0.8); border: 1px solid rgba(22,163,74,0.1); gap: 8px;
-  }
-  .connector-name { font-size: 12px; font-weight: 600; color: #374151; }
-  .connector-power { font-size: 13px; font-weight: 700; color: #15803d; }
-  .connector-qty { font-size: 11px; color: #6b7280; font-weight: 500; }
-
   .modal-footer {
     padding: 16px 24px; border-top: 1px solid rgba(99,102,241,0.08);
     display: flex; justify-content: flex-end;
@@ -271,10 +216,10 @@
 <div class="app">
   <header>
     <div class="header-left">
-      <div class="logo-icon" id="header-icon">⛽</div>
+      <div class="logo-icon">⛽</div>
       <div class="logo-text">
-        <h1 id="header-title">Carburantes &amp; Recarga · España</h1>
-        <p id="header-sub">Precios en tiempo real · Ministerio METUR</p>
+        <h1>Carburantes España</h1>
+        <p>Precios en tiempo real · Ministerio METUR</p>
       </div>
     </div>
     <div class="live-badge">
@@ -283,18 +228,7 @@
     </div>
   </header>
 
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab active" id="tab-fuel" onclick="switchTab('fuel')">
-      <span class="tab-icon">⛽</span> Gasolineras
-    </button>
-    <button class="tab" id="tab-ev" onclick="switchTab('ev')">
-      <span class="tab-icon">⚡</span> Recarga Eléctrica
-    </button>
-  </div>
-
-  <!-- FILTROS GASOLINA -->
-  <div class="panel glass" id="filters-fuel">
+  <div class="panel glass">
     <div class="panel-label">Filtros</div>
     <div class="filters-row">
       <div class="fg">
@@ -305,34 +239,11 @@
         <label>Municipio</label>
         <select id="sel-municipio"><option value="">Todos los municipios</option></select>
       </div>
-      <div class="filter-info" id="filter-count-fuel"></div>
+      <div class="filter-info" id="filter-count"></div>
     </div>
   </div>
 
-  <!-- FILTROS EV -->
-  <div class="panel glass" id="filters-ev" style="display:none">
-    <div class="panel-label">Filtros</div>
-    <div class="filters-row">
-      <div class="fg">
-        <label>Provincia</label>
-        <select id="sel-ev-provincia"><option value="">Todas las provincias</option></select>
-      </div>
-      <div class="fg">
-        <label>Potencia mínima</label>
-        <select id="sel-ev-potencia">
-          <option value="0">Cualquier potencia</option>
-          <option value="22">≥ 22 kW (Rápido)</option>
-          <option value="50">≥ 50 kW (Ultra-rápido)</option>
-          <option value="100">≥ 100 kW</option>
-          <option value="150">≥ 150 kW</option>
-        </select>
-      </div>
-      <div class="filter-info" id="filter-count-ev"></div>
-    </div>
-  </div>
-
-  <!-- TABLA GASOLINA -->
-  <div class="table-panel glass" id="panel-fuel">
+  <div class="table-panel glass">
     <div class="table-toolbar">
       <span class="toolbar-label">Ordenar:</span>
       <button class="pill" data-sort="nombre">Nombre</button>
@@ -341,48 +252,25 @@
       <button class="pill" data-sort="municipio">Municipio</button>
     </div>
     <div class="table-wrap">
-      <div class="loading" id="loading-fuel">
+      <div class="loading" id="loading">
         <div class="spinner"></div>
         <div class="loading-text">Cargando datos del Ministerio...</div>
       </div>
-      <div class="error-box" id="error-fuel" style="display:none"></div>
-      <table id="tabla-fuel" style="display:none">
-        <thead><tr>
-          <th>Nombre</th><th>Municipio</th><th>Gasóleo A</th><th>Gasolina 95</th>
-        </tr></thead>
-        <tbody id="tbody-fuel"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- TABLA EV -->
-  <div class="table-panel glass" id="panel-ev" style="display:none">
-    <div class="table-toolbar">
-      <span class="toolbar-label">Ordenar:</span>
-      <button class="pill-ev active-green" data-sort-ev="nombre">Nombre</button>
-      <button class="pill-ev" data-sort-ev="potencia">Potencia ↓</button>
-      <button class="pill-ev" data-sort-ev="conectores">Conectores</button>
-    </div>
-    <div class="table-wrap">
-      <div class="loading" id="loading-ev" style="display:none">
-        <div class="spinner" style="border-top-color:#16a34a"></div>
-        <div class="loading-text">Cargando puntos de recarga...</div>
-      </div>
-      <div class="error-box" id="error-ev" style="display:none"></div>
-      <table id="tabla-ev" style="display:none">
-        <thead><tr>
-          <th>Nombre / Operador</th><th>Provincia</th><th>Potencia máx.</th><th>Conectores</th><th>Estado</th>
-        </tr></thead>
-        <tbody id="tbody-ev"></tbody>
+      <div class="error-box" id="error-msg" style="display:none"></div>
+      <table id="tabla" style="display:none">
+        <thead>
+          <tr>
+            <th>Nombre</th><th>Municipio</th><th>Gasóleo A</th><th>Gasolina 95</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
       </table>
     </div>
   </div>
 
   <footer>
-    ⛽ <a href="https://sedeaplicaciones.minetur.gob.es" target="_blank">Ministerio METUR</a>
-    &nbsp;·&nbsp;
-    ⚡ <a href="https://openchargemap.org" target="_blank">OpenChargeMap</a>
-    &nbsp;·&nbsp; Refresco automático cada 30 min
+    Fuente: <a href="https://sedeaplicaciones.minetur.gob.es" target="_blank">Ministerio de Industria y Turismo</a>
+    &nbsp;·&nbsp; Refresco automático cada 30 minutos
   </footer>
 </div>
 
@@ -407,43 +295,11 @@
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-//  ESTADO GLOBAL
-// ═══════════════════════════════════════════════════════
-var currentTab = 'fuel';
-
-// ── GASOLINERAS ────────────────────────────────────────
-var API_FUEL = 'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/';
-var allFuel = [], sortColFuel = 'g95', sortDirFuel = 1, currentSortedFuel = [];
-var fuelLoaded = false;
-
-// ── EV ────────────────────────────────────────────────
-// OpenChargeMap API — key pública de demo (sin límite en lectura)
-var API_EV = 'https://api.openchargemap.io/v3/poi/?output=json&countrycode=ES&maxresults=5000&compact=true&verbose=false&key=82afdb5b-9c60-4840-bd30-c80fd6cae67f';
-var allEV = [], sortColEV = 'nombre', sortDirEV = 1, currentSortedEV = [];
-var evLoaded = false;
+var API = 'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/';
+var allData = [], sortCol = 'g95', sortDir = 1, currentSorted = [];
 
 var parsePrice = function(s) { return (!s || !s.trim()) ? null : parseFloat(s.replace(',','.')); };
 
-// ═══════════════════════════════════════════════════════
-//  TABS
-// ═══════════════════════════════════════════════════════
-function switchTab(tab) {
-  currentTab = tab;
-  document.getElementById('tab-fuel').className = 'tab' + (tab === 'fuel' ? ' active' : '');
-  document.getElementById('tab-ev').className   = 'tab' + (tab === 'ev'   ? ' active ev' : '');
-
-  document.getElementById('filters-fuel').style.display = tab === 'fuel' ? '' : 'none';
-  document.getElementById('filters-ev').style.display   = tab === 'ev'   ? '' : 'none';
-  document.getElementById('panel-fuel').style.display   = tab === 'fuel' ? '' : 'none';
-  document.getElementById('panel-ev').style.display     = tab === 'ev'   ? '' : 'none';
-
-  if (tab === 'ev' && !evLoaded) fetchEV();
-}
-
-// ═══════════════════════════════════════════════════════
-//  GASOLINERAS
-// ═══════════════════════════════════════════════════════
 var FUELS = [
   { key: 'Precio Gasolina 95 E5',             label: 'Gasolina 95 E5',      color: 'fp-green'  },
   { key: 'Precio Gasolina 95 E5 Premium',      label: 'Gasolina 95 Premium', color: 'fp-green'  },
@@ -460,31 +316,30 @@ var FUELS = [
   { key: 'Precio Hidrogeno',                   label: 'Hidrógeno',           color: 'fp-gray'   },
 ];
 
-async function fetchFuel() {
-  document.getElementById('loading-fuel').style.display = 'flex';
-  document.getElementById('tabla-fuel').style.display = 'none';
-  document.getElementById('error-fuel').style.display = 'none';
+async function fetchData() {
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('tabla').style.display = 'none';
+  document.getElementById('error-msg').style.display = 'none';
   try {
-    var res = await fetch(API_FUEL);
+    var res = await fetch(API);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var json = await res.json();
-    allFuel = json.ListaEESSPrecio || [];
+    allData = json.ListaEESSPrecio || [];
     document.getElementById('last-update').textContent = 'Actualizado: ' + (json.Fecha || '—');
-    buildFuelFilters();
-    renderFuel();
-    fuelLoaded = true;
-    document.getElementById('loading-fuel').style.display = 'none';
-    document.getElementById('tabla-fuel').style.display = 'table';
+    buildFilters();
+    render();
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('tabla').style.display = 'table';
   } catch(e) {
-    document.getElementById('loading-fuel').style.display = 'none';
-    var err = document.getElementById('error-fuel');
+    document.getElementById('loading').style.display = 'none';
+    var err = document.getElementById('error-msg');
     err.style.display = 'block';
     err.textContent = '⚠️ Error: ' + e.message;
   }
 }
 
-function buildFuelFilters() {
-  var provincias = [...new Set(allFuel.map(function(d){ return d.Provincia; }))].sort();
+function buildFilters() {
+  var provincias = [...new Set(allData.map(function(d){ return d.Provincia; }))].sort();
   var sel = document.getElementById('sel-provincia');
   sel.innerHTML = '<option value="">Todas las provincias</option>';
   provincias.forEach(function(p) {
@@ -494,7 +349,7 @@ function buildFuelFilters() {
 
 function updateMunicipios() {
   var prov = document.getElementById('sel-provincia').value;
-  var base = prov ? allFuel.filter(function(d){ return d.Provincia === prov; }) : allFuel;
+  var base = prov ? allData.filter(function(d){ return d.Provincia === prov; }) : allData;
   var municipios = [...new Set(base.map(function(d){ return d.Municipio; }))].sort();
   var sel = document.getElementById('sel-municipio');
   sel.innerHTML = '<option value="">Todos los municipios</option>';
@@ -503,15 +358,15 @@ function updateMunicipios() {
   });
 }
 
-function getFuelFiltered() {
+function getFiltered() {
   var prov = document.getElementById('sel-provincia').value;
   var muni = document.getElementById('sel-municipio').value;
-  return allFuel.filter(function(d) {
+  return allData.filter(function(d) {
     return (!prov || d.Provincia === prov) && (!muni || d.Municipio === muni);
   });
 }
 
-function sortValFuel(d, col) {
+function sortVal(d, col) {
   if (col === 'g95')      return parsePrice(d['Precio Gasolina 95 E5']) || 99999;
   if (col === 'diesel')   return parsePrice(d['Precio Gasoleo A']) || 99999;
   if (col === 'nombre')   return d['Rótulo'] || '';
@@ -519,22 +374,22 @@ function sortValFuel(d, col) {
   return '';
 }
 
-function renderFuel() {
-  var filtered = getFuelFiltered();
-  document.getElementById('filter-count-fuel').innerHTML = '<b>' + filtered.length.toLocaleString('es') + '</b> estaciones';
+function render() {
+  var filtered = getFiltered();
+  document.getElementById('filter-count').innerHTML = '<b>' + filtered.length.toLocaleString('es') + '</b> estaciones';
 
-  currentSortedFuel = filtered.slice().sort(function(a, b) {
-    var va = sortValFuel(a, sortColFuel), vb = sortValFuel(b, sortColFuel);
-    return va < vb ? -sortDirFuel : va > vb ? sortDirFuel : 0;
+  currentSorted = filtered.slice().sort(function(a, b) {
+    var va = sortVal(a, sortCol), vb = sortVal(b, sortCol);
+    return va < vb ? -sortDir : va > vb ? sortDir : 0;
   });
 
   var min95     = Math.min.apply(null, filtered.map(function(d){ return parsePrice(d['Precio Gasolina 95 E5']) || 99999; }));
   var minDiesel = Math.min.apply(null, filtered.map(function(d){ return parsePrice(d['Precio Gasoleo A']) || 99999; }));
 
-  var tbody = document.getElementById('tbody-fuel');
+  var tbody = document.getElementById('tbody');
   tbody.innerHTML = '';
 
-  currentSortedFuel.forEach(function(d, i) {
+  currentSorted.forEach(function(d, i) {
     var p95 = parsePrice(d['Precio Gasolina 95 E5']);
     var pd  = parsePrice(d['Precio Gasoleo A']);
 
@@ -546,18 +401,18 @@ function renderFuel() {
       : '<span class="vacio">—</span>';
 
     var tr = document.createElement('tr');
-    tr.title = 'Ver detalle de combustibles';
+    tr.title = 'Pulsa para ver todos los combustibles';
     tr.innerHTML =
       '<td class="cell-nombre" title="' + (d['Rótulo']||'') + '">' + ((d['Rótulo']||'').trim()||'—') + '</td>' +
       '<td>' + (d['Municipio']||'').trim() + '</td>' +
       '<td>' + dhtml + '</td>' +
       '<td>' + g95html + '</td>';
-    tr.addEventListener('click', (function(idx){ return function(){ openModalFuel(currentSortedFuel[idx]); }; })(i));
+    tr.addEventListener('click', (function(idx){ return function(){ openModal(currentSorted[idx]); }; })(i));
     tbody.appendChild(tr);
   });
 }
 
-function openModalFuel(d) {
+function openModal(d) {
   document.getElementById('modal-rotulo').textContent = (d['Rótulo']||'Sin nombre').trim();
   document.getElementById('modal-address').textContent =
     [(d['Dirección']||'').trim(), (d['Municipio']||'').trim(), (d['Provincia']||'').trim()].filter(Boolean).join(' · ');
@@ -600,249 +455,38 @@ function openModalFuel(d) {
     var q = encodeURIComponent([(d['Rótulo']||''),(d['Dirección']||''),(d['Municipio']||''),'España'].filter(Boolean).join(' '));
     btn.href = 'https://www.google.com/maps/search/?api=1&query=' + q;
   }
-  openModal();
-}
 
-// ═══════════════════════════════════════════════════════
-//  EV — OpenChargeMap
-// ═══════════════════════════════════════════════════════
-async function fetchEV() {
-  document.getElementById('loading-ev').style.display = 'flex';
-  document.getElementById('tabla-ev').style.display = 'none';
-  document.getElementById('error-ev').style.display = 'none';
-  document.getElementById('last-update').textContent = 'Cargando puntos EV...';
-
-  try {
-    var res = await fetch(API_EV);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    allEV = await res.json();
-    evLoaded = true;
-    buildEVFilters();
-    renderEV();
-    document.getElementById('loading-ev').style.display = 'none';
-    document.getElementById('tabla-ev').style.display = 'table';
-    document.getElementById('last-update').textContent = allEV.length.toLocaleString('es') + ' puntos EV cargados';
-  } catch(e) {
-    document.getElementById('loading-ev').style.display = 'none';
-    var err = document.getElementById('error-ev');
-    err.style.display = 'block';
-    err.textContent = '⚠️ Error cargando puntos EV: ' + e.message;
-  }
-}
-
-function getEVProvincias() {
-  var set = new Set();
-  allEV.forEach(function(p) {
-    var addr = p.AddressInfo;
-    if (addr && addr.StateOrProvince) set.add(addr.StateOrProvince);
-  });
-  return Array.from(set).sort();
-}
-
-function buildEVFilters() {
-  var sel = document.getElementById('sel-ev-provincia');
-  sel.innerHTML = '<option value="">Todas las provincias</option>';
-  getEVProvincias().forEach(function(p) {
-    var o = document.createElement('option'); o.value = p; o.textContent = p; sel.appendChild(o);
-  });
-}
-
-function getMaxPower(poi) {
-  var max = 0;
-  if (poi.Connections) {
-    poi.Connections.forEach(function(c) {
-      if (c.PowerKW && c.PowerKW > max) max = c.PowerKW;
-    });
-  }
-  return max;
-}
-
-function getPowerClass(kw) {
-  if (kw >= 150) return 'fast';
-  if (kw >= 50)  return 'rapid';
-  if (kw > 0)    return 'slow';
-  return 'unknown';
-}
-
-function getPowerLabel(kw) {
-  if (kw >= 1000) return (kw/1000).toFixed(0) + ' MW';
-  if (kw > 0)     return kw + ' kW';
-  return '—';
-}
-
-function getStatusHtml(poi) {
-  var s = poi.StatusType;
-  if (!s) return '<span class="tag-status-unk">Desconocido</span>';
-  var t = (s.Title||'').toLowerCase();
-  if (t.includes('operational') || t.includes('operativo')) return '<span class="tag-status-ok">✔ Operativo</span>';
-  if (t.includes('not') || t.includes('planned') || t.includes('removed')) return '<span class="tag-status-err">✖ No disponible</span>';
-  return '<span class="tag-status-unk">' + (s.Title||'?') + '</span>';
-}
-
-function getEVFiltered() {
-  var prov = document.getElementById('sel-ev-provincia').value;
-  var minPow = parseInt(document.getElementById('sel-ev-potencia').value) || 0;
-  return allEV.filter(function(p) {
-    var addr = p.AddressInfo;
-    if (!addr) return false;
-    if (prov && (addr.StateOrProvince||'') !== prov) return false;
-    if (minPow > 0 && getMaxPower(p) < minPow) return false;
-    return true;
-  });
-}
-
-function sortValEV(p, col) {
-  if (col === 'nombre')    return (p.AddressInfo && p.AddressInfo.Title) || '';
-  if (col === 'potencia')  return -getMaxPower(p); // desc
-  if (col === 'conectores')return p.Connections ? -p.Connections.length : 0;
-  return '';
-}
-
-function renderEV() {
-  var filtered = getEVFiltered();
-  document.getElementById('filter-count-ev').innerHTML = '<b>' + filtered.length.toLocaleString('es') + '</b> puntos';
-
-  currentSortedEV = filtered.slice().sort(function(a, b) {
-    var va = sortValEV(a, sortColEV), vb = sortValEV(b, sortColEV);
-    return va < vb ? -sortDirEV : va > vb ? sortDirEV : 0;
-  });
-
-  var tbody = document.getElementById('tbody-ev');
-  tbody.innerHTML = '';
-
-  currentSortedEV.forEach(function(p, i) {
-    var addr = p.AddressInfo || {};
-    var maxKw = getMaxPower(p);
-    var pwClass = getPowerClass(maxKw);
-    var pwLabel = getPowerLabel(maxKw);
-    var nConns = p.Connections ? p.Connections.length : 0;
-    var operador = (p.OperatorInfo && p.OperatorInfo.Title) ? p.OperatorInfo.Title : '—';
-    var nombre = addr.Title || operador;
-    var prov = addr.StateOrProvince || '—';
-
-    var tr = document.createElement('tr');
-    tr.title = 'Ver detalle del punto de recarga';
-    tr.innerHTML =
-      '<td class="cell-nombre" title="' + nombre + '">' + nombre + '</td>' +
-      '<td>' + prov + '</td>' +
-      '<td><span class="tag-ev ' + pwClass + '">' + pwLabel + '</span></td>' +
-      '<td>' + nConns + ' conector' + (nConns !== 1 ? 'es' : '') + '</td>' +
-      '<td>' + getStatusHtml(p) + '</td>';
-    tr.addEventListener('click', (function(idx){ return function(){ openModalEV(currentSortedEV[idx]); }; })(i));
-    tbody.appendChild(tr);
-  });
-}
-
-function openModalEV(p) {
-  var addr = p.AddressInfo || {};
-  var operador = (p.OperatorInfo && p.OperatorInfo.Title) ? p.OperatorInfo.Title : 'Desconocido';
-  var nombre = addr.Title || operador;
-
-  document.getElementById('modal-rotulo').textContent = nombre;
-  document.getElementById('modal-address').textContent =
-    [addr.AddressLine1, addr.Town, addr.StateOrProvince, 'España'].filter(Boolean).join(' · ');
-
-  var meta = document.getElementById('modal-meta');
-  meta.innerHTML = '';
-  var tags = [
-    operador !== 'Desconocido' ? '🏢 ' + operador : null,
-    addr.AccessComments ? '🚗 ' + addr.AccessComments : null,
-    p.UsageType ? p.UsageType.Title : null,
-  ];
-  tags.filter(Boolean).forEach(function(txt) {
-    var s = document.createElement('span'); s.className = 'meta-tag green'; s.textContent = txt; meta.appendChild(s);
-  });
-
-  var body = document.getElementById('modal-body');
-  body.innerHTML = '';
-
-  if (p.Connections && p.Connections.length) {
-    var title = document.createElement('div'); title.className = 'fuel-section-title'; title.textContent = 'Conectores disponibles';
-    body.appendChild(title);
-    var list = document.createElement('div'); list.className = 'connector-list';
-
-    p.Connections.forEach(function(c) {
-      var tipo = (c.ConnectionType && c.ConnectionType.Title) ? c.ConnectionType.Title : 'Tipo desconocido';
-      var kw = c.PowerKW ? c.PowerKW + ' kW' : '—';
-      var qty = c.Quantity ? c.Quantity + ' unidad' + (c.Quantity > 1 ? 'es' : '') : '';
-      var item = document.createElement('div'); item.className = 'connector-item';
-      item.innerHTML =
-        '<span class="connector-name">⚡ ' + tipo + '</span>' +
-        '<span class="connector-qty">' + qty + '</span>' +
-        '<span class="connector-power">' + kw + '</span>';
-      list.appendChild(item);
-    });
-    body.appendChild(list);
-  } else {
-    body.innerHTML = '<p style="color:#9ca3af;font-size:13px;text-align:center;padding:24px 0">Sin información de conectores.</p>';
-  }
-
-  var lat = addr.Latitude, lon = addr.Longitude;
-  var btn = document.getElementById('btn-maps');
-  if (lat && lon) {
-    btn.href = 'https://www.google.com/maps?q=' + lat + ',' + lon;
-  } else {
-    var q = encodeURIComponent(nombre + ' cargador eléctrico España');
-    btn.href = 'https://www.google.com/maps/search/?api=1&query=' + q;
-  }
-  openModal();
-}
-
-// ═══════════════════════════════════════════════════════
-//  MODAL COMÚN
-// ═══════════════════════════════════════════════════════
-function openModal() {
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
+
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
+
 document.getElementById('modal-close').addEventListener('click', closeModal);
 document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
-// ═══════════════════════════════════════════════════════
-//  EVENTOS FILTROS / SORT
-// ═══════════════════════════════════════════════════════
-document.getElementById('sel-provincia').addEventListener('change', function() { updateMunicipios(); renderFuel(); });
-document.getElementById('sel-municipio').addEventListener('change', renderFuel);
-document.getElementById('sel-ev-provincia').addEventListener('change', renderEV);
-document.getElementById('sel-ev-potencia').addEventListener('change', renderEV);
+document.getElementById('sel-provincia').addEventListener('change', function() { updateMunicipios(); render(); });
+document.getElementById('sel-municipio').addEventListener('change', render);
 
 document.querySelectorAll('.pill').forEach(function(btn) {
   btn.addEventListener('click', function() {
     var col = btn.dataset.sort;
-    sortDirFuel = (sortColFuel === col) ? sortDirFuel * -1 : 1;
-    sortColFuel = col;
+    sortDir = (sortCol === col) ? sortDir * -1 : 1;
+    sortCol = col;
     document.querySelectorAll('.pill').forEach(function(b){ b.classList.remove('active','active-orange'); });
     btn.classList.add(col === 'diesel' ? 'active-orange' : 'active');
-    renderFuel();
+    render();
   });
 });
 
-document.querySelectorAll('.pill-ev').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var col = btn.dataset.sortEv || btn.getAttribute('data-sort-ev');
-    sortDirEV = (sortColEV === col) ? sortDirEV * -1 : 1;
-    sortColEV = col;
-    document.querySelectorAll('.pill-ev').forEach(function(b){ b.className = 'pill-ev'; });
-    btn.className = 'pill-ev active-green';
-    renderEV();
-  });
-});
-
-// ═══════════════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════════════
-fetchFuel();
-setInterval(function() {
-  if (currentTab === 'fuel') fetchFuel();
-  else if (evLoaded) fetchEV();
-}, 30 * 60 * 1000);
+fetchData();
+setInterval(fetchData, 30 * 60 * 1000);
 </script>
 </body>
 </html>
