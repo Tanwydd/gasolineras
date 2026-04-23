@@ -210,6 +210,140 @@
     .col-dir, .col-prov { display: none; }
     td { max-width: 120px; }
   }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(15,15,35,0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid rgba(255,255,255,0.95);
+    box-shadow: 0 24px 80px rgba(99,102,241,0.18), 0 2px 8px rgba(0,0,0,0.06);
+    border-radius: 24px;
+    width: 100%; max-width: 520px;
+    max-height: 90vh;
+    display: flex; flex-direction: column;
+    transform: translateY(16px) scale(0.98);
+    transition: transform .22s cubic-bezier(.34,1.56,.64,1);
+    overflow: hidden;
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+  .modal-header {
+    padding: 24px 24px 0;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  }
+
+  .modal-header-left { flex: 1; min-width: 0; }
+
+  .modal-rotulo {
+    font-size: 19px; font-weight: 700; color: #111827;
+    letter-spacing: -0.3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .modal-address {
+    font-size: 12px; color: #6b7280; font-weight: 500;
+    margin-top: 4px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .modal-close {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: none; background: rgba(99,102,241,0.08);
+    color: #6366f1; font-size: 18px; font-weight: 300;
+    cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+    line-height: 1;
+  }
+  .modal-close:hover { background: rgba(99,102,241,0.16); }
+
+  .modal-meta {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    padding: 12px 24px 0;
+  }
+
+  .meta-tag {
+    font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 50px;
+    background: rgba(99,102,241,0.07);
+    color: #4f46e5;
+    border: 1px solid rgba(99,102,241,0.12);
+  }
+
+  .modal-body {
+    padding: 16px 24px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .fuel-section-title {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: #9ca3af;
+    margin: 12px 0 8px;
+  }
+  .fuel-section-title:first-child { margin-top: 0; }
+
+  .fuel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+
+  .fuel-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; border-radius: 12px;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(99,102,241,0.08);
+    gap: 8px;
+  }
+
+  .fuel-name {
+    font-size: 12px; font-weight: 600; color: #374151;
+    flex: 1; min-width: 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .fuel-price {
+    font-size: 14px; font-weight: 700;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .fuel-price.fp-green  { color: #16a34a; }
+  .fuel-price.fp-orange { color: #ea580c; }
+  .fuel-price.fp-blue   { color: #2563eb; }
+  .fuel-price.fp-purple { color: #7c3aed; }
+  .fuel-price.fp-gray   { color: #6b7280; }
+
+  .modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(99,102,241,0.08);
+    display: flex; justify-content: flex-end;
+  }
+
+  .btn-maps {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px; border-radius: 12px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff; font-family: inherit;
+    font-size: 13px; font-weight: 700;
+    border: none; cursor: pointer; text-decoration: none;
+    box-shadow: 0 4px 16px rgba(99,102,241,0.35);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn-maps:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(99,102,241,0.45); }
+  .btn-maps:active { transform: translateY(0); }
 </style>
 </head>
 <body>
@@ -314,6 +448,26 @@
 
 </div>
 
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-rotulo" id="modal-rotulo"></div>
+        <div class="modal-address" id="modal-address"></div>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-meta" id="modal-meta"></div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer">
+      <a class="btn-maps" id="btn-maps" href="#" target="_blank" rel="noopener">
+        🗺️ Abrir en Google Maps
+      </a>
+    </div>
+  </div>
+</div>
+
 <script>
 const API = 'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/';
 let allData = [], sortCol = 'g95', sortDir = 1;
@@ -381,38 +535,6 @@ function sortVal(d, col) {
   return map[col]??'';
 }
 
-function render() {
-  const filtered = getFiltered();
-  updateStats(filtered);
-  document.getElementById('filter-count').innerHTML = `<b>${filtered.length.toLocaleString('es')}</b> estaciones`;
-
-  const sorted = [...filtered].sort((a,b) => {
-    const va=sortVal(a,sortCol), vb=sortVal(b,sortCol);
-    return va<vb?-sortDir:va>vb?sortDir:0;
-  });
-
-  const min95     = Math.min(...filtered.map(d=>parsePrice(d['Precio Gasolina 95 E5'])??99999));
-  const minDiesel = Math.min(...filtered.map(d=>parsePrice(d['Precio Gasoleo A'])??99999));
-
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = '';
-  sorted.forEach(d => {
-    const p95 = parsePrice(d['Precio Gasolina 95 E5']);
-    const pd  = parsePrice(d['Precio Gasoleo A']);
-    const g95html    = p95!==null ? `<span class="tag-g95${p95===min95?' best':''}">${p95===min95?'⭐ ':''}${p95.toFixed(3)} €</span>` : `<span class="vacio">—</span>`;
-    const dieselHtml = pd!==null  ? `<span class="tag-diesel${pd===minDiesel?' best':''}">${pd===minDiesel?'⭐ ':''}${pd.toFixed(3)} €</span>` : `<span class="vacio">—</span>`;
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td class="cell-nombre" title="${d['Rótulo']||''}">${(d['Rótulo']||'').trim()||'—'}</td>
-      <td class="col-dir" title="${d['Dirección']||''}">${(d['Dirección']||'').trim()||'—'}</td>
-      <td>${(d['Municipio']||'').trim()}</td>
-      <td class="col-prov">${(d['Provincia']||'').trim()}</td>
-      <td>${g95html}</td>
-      <td>${dieselHtml}</td>`;
-    tbody.appendChild(tr);
-  });
-}
-
 document.getElementById('sel-provincia').addEventListener('change', () => { updateMunicipios(); render(); });
 document.getElementById('sel-municipio').addEventListener('change', render);
 document.querySelectorAll('.pill').forEach(btn => {
@@ -425,6 +547,132 @@ document.querySelectorAll('.pill').forEach(btn => {
     render();
   });
 });
+
+// --- MODAL ---
+const FUELS = [
+  { key: 'Precio Gasolina 95 E5',              label: 'Gasolina 95 E5',         color: 'fp-green'  },
+  { key: 'Precio Gasolina 95 E5 Premium',       label: 'Gasolina 95 Premium',    color: 'fp-green'  },
+  { key: 'Precio Gasolina 98 E5',               label: 'Gasolina 98 E5',         color: 'fp-green'  },
+  { key: 'Precio Gasolina 98 E10',              label: 'Gasolina 98 E10',        color: 'fp-green'  },
+  { key: 'Precio Gasoleo A',                    label: 'Gasóleo A',              color: 'fp-orange' },
+  { key: 'Precio Gasoleo B',                    label: 'Gasóleo B',              color: 'fp-orange' },
+  { key: 'Precio Gasoleo Premium',              label: 'Gasóleo Premium',        color: 'fp-orange' },
+  { key: 'Precio Biodiesel',                    label: 'Biodiesel',              color: 'fp-blue'   },
+  { key: 'Precio Bioetanol',                    label: 'Bioetanol',              color: 'fp-blue'   },
+  { key: 'Precio Gas Natural Comprimido',       label: 'GNC',                    color: 'fp-purple' },
+  { key: 'Precio Gas Natural Licuado',          label: 'GNL',                    color: 'fp-purple' },
+  { key: 'Precio Gases licuados del petróleo',  label: 'GLP',                    color: 'fp-purple' },
+  { key: 'Precio Hidrogeno',                    label: 'Hidrógeno',              color: 'fp-gray'   },
+];
+
+function openModal(d) {
+  document.getElementById('modal-rotulo').textContent =
+    (d['Rótulo']||'Sin nombre').trim();
+  document.getElementById('modal-address').textContent =
+    [(d['Dirección']||'').trim(), (d['Municipio']||'').trim(), (d['Provincia']||'').trim()]
+    .filter(Boolean).join(' · ');
+
+  // Meta tags
+  const meta = document.getElementById('modal-meta');
+  meta.innerHTML = '';
+  [
+    d['Horario']   ? '🕐 ' + d['Horario'].trim()       : null,
+    d['Tipo Venta']? d['Tipo Venta'].trim()             : null,
+    d['Margen']    ? 'Margen ' + d['Margen'].trim()     : null,
+  ].filter(Boolean).forEach(txt => {
+    const s = document.createElement('span');
+    s.className = 'meta-tag'; s.textContent = txt;
+    meta.appendChild(s);
+  });
+
+  // Combustibles
+  const body = document.getElementById('modal-body');
+  body.innerHTML = '';
+  const available = FUELS.filter(f => { const v=parsePrice(d[f.key]); return v!==null && v>0; });
+
+  if (!available.length) {
+    body.innerHTML = '<p style="color:#9ca3af;font-size:13px;text-align:center;padding:24px 0">No hay precios disponibles.</p>';
+  } else {
+    const title = document.createElement('div');
+    title.className = 'fuel-section-title';
+    title.textContent = 'Combustibles disponibles';
+    body.appendChild(title);
+    const grid = document.createElement('div');
+    grid.className = 'fuel-grid';
+    available.forEach(f => {
+      const price = parsePrice(d[f.key]);
+      const item = document.createElement('div');
+      item.className = 'fuel-item';
+      item.innerHTML = `<span class="fuel-name">${f.label}</span><span class="fuel-price ${f.color}">${price.toFixed(3)} €</span>`;
+      grid.appendChild(item);
+    });
+    body.appendChild(grid);
+  }
+
+  // Google Maps
+  const lat = (d['Latitud']||'').replace(',','.');
+  const lon = (d['Longitud (WGS84)']||d['Longitud']||'').replace(',','.');
+  const btnMaps = document.getElementById('btn-maps');
+  if (lat && lon && lat !== '0' && lon !== '0') {
+    btnMaps.href = `https://www.google.com/maps?q=${lat},${lon}`;
+  } else {
+    const q = encodeURIComponent([(d['Rótulo']||''),(d['Dirección']||''),(d['Municipio']||''),'España'].filter(Boolean).join(' '));
+    btnMaps.href = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  }
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Almacenamos el array ordenado actual para el click
+let currentSorted = [];
+
+const origRender = render;
+function render() {
+  const filtered = getFiltered();
+  updateStats(filtered);
+  document.getElementById('filter-count').innerHTML = `<b>${filtered.length.toLocaleString('es')}</b> estaciones`;
+
+  currentSorted = [...filtered].sort((a,b) => {
+    const va=sortVal(a,sortCol), vb=sortVal(b,sortCol);
+    return va<vb?-sortDir:va>vb?sortDir:0;
+  });
+
+  const min95     = Math.min(...filtered.map(d=>parsePrice(d['Precio Gasolina 95 E5'])??99999));
+  const minDiesel = Math.min(...filtered.map(d=>parsePrice(d['Precio Gasoleo A'])??99999));
+
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  currentSorted.forEach((d, i) => {
+    const p95 = parsePrice(d['Precio Gasolina 95 E5']);
+    const pd  = parsePrice(d['Precio Gasoleo A']);
+    const g95html    = p95!==null ? `<span class="tag-g95${p95===min95?' best':''}">${p95===min95?'⭐ ':''}${p95.toFixed(3)} €</span>` : `<span class="vacio">—</span>`;
+    const dieselHtml = pd!==null  ? `<span class="tag-diesel${pd===minDiesel?' best':''}">${pd===minDiesel?'⭐ ':''}${pd.toFixed(3)} €</span>` : `<span class="vacio">—</span>`;
+    const tr = document.createElement('tr');
+    tr.style.cursor = 'pointer';
+    tr.title = 'Ver detalle';
+    tr.innerHTML = `
+      <td class="cell-nombre" title="${d['Rótulo']||''}">${(d['Rótulo']||'').trim()||'—'}</td>
+      <td class="col-dir" title="${d['Dirección']||''}">${(d['Dirección']||'').trim()||'—'}</td>
+      <td>${(d['Municipio']||'').trim()}</td>
+      <td class="col-prov">${(d['Provincia']||'').trim()}</td>
+      <td>${g95html}</td>
+      <td>${dieselHtml}</td>`;
+    tr.addEventListener('click', () => openModal(currentSorted[i]));
+    tbody.appendChild(tr);
+  });
+}
 
 fetchData();
 setInterval(fetchData, 30*60*1000);
