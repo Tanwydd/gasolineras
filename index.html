@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carburantes España</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    background: #eef2ff;
+    background-image:
+      radial-gradient(ellipse at 15% 0%, rgba(99,102,241,0.22) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 5%, rgba(249,115,22,0.14) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 95%, rgba(139,92,246,0.12) 0%, transparent 55%);
+    background-attachment: fixed;
+    color: #1e1e2e;
+  }
+
+  .blob { position: fixed; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+  .blob-1 { width: 600px; height: 600px; background: rgba(99,102,241,0.12); top: -150px; left: -150px; }
+  .blob-2 { width: 500px; height: 500px; background: rgba(249,115,22,0.10); top: -50px; right: -100px; }
+  .blob-3 { width: 400px; height: 400px; background: rgba(139,92,246,0.09); bottom: -120px; left: 35%; }
+
+  .app { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 28px 20px 48px; }
+
+  .glass {
+    background: rgba(255,255,255,0.62);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.85);
+    box-shadow: 0 4px 32px rgba(99,102,241,0.07), 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  /* HEADER */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 24px;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 14px; }
+
+  .logo-icon {
+    width: 50px; height: 50px; border-radius: 15px;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 6px 20px rgba(99,102,241,0.35);
+  }
+
+  .logo-text h1 { font-size: 21px; font-weight: 700; letter-spacing: -0.5px; }
+  .logo-text p  { font-size: 12px; color: #6b7280; margin-top: 2px; }
+
+  .live-badge {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 50px;
+    font-size: 12px; font-weight: 600; color: #4f46e5;
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.18);
+  }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.85)} }
+
+  /* STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .stat-card {
+    border-radius: 18px;
+    padding: 18px 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(99,102,241,0.12); }
+
+  .stat-emoji { font-size: 22px; margin-bottom: 10px; display: block; }
+  .stat-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 5px; }
+  .stat-value { font-size: clamp(18px,2.5vw,26px); font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
+  .stat-value.c-indigo { color: #6366f1; }
+  .stat-value.c-green  { color: #16a34a; }
+  .stat-value.c-orange { color: #ea580c; }
+
+  /* FILTROS */
+  .panel { border-radius: 18px; padding: 18px 20px; margin-bottom: 14px; }
+  .panel-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 12px; }
+
+  .filters-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+
+  .fg { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 170px; max-width: 260px; }
+  .fg label { font-size: 12px; font-weight: 600; color: #374151; }
+
+  select {
+    background: rgba(255,255,255,0.75);
+    border: 1.5px solid rgba(99,102,241,0.15);
+    border-radius: 10px;
+    color: #1e1e2e;
+    font-family: inherit; font-size: 13px; font-weight: 500;
+    padding: 9px 32px 9px 12px;
+    appearance: none; cursor: pointer; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236366f1' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    width: 100%;
+  }
+  select:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.12); }
+
+  .filter-info { font-size: 13px; color: #6b7280; font-weight: 500; align-self: center; white-space: nowrap; padding-bottom: 1px; }
+  .filter-info b { color: #6366f1; }
+
+  /* TABLA PANEL */
+  .table-panel { border-radius: 18px; overflow: hidden; }
+
+  .table-toolbar {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid rgba(99,102,241,0.08);
+  }
+
+  .toolbar-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-right: 2px; }
+
+  .pill {
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    padding: 5px 14px; border-radius: 50px;
+    border: 1.5px solid rgba(99,102,241,0.14);
+    background: rgba(255,255,255,0.6);
+    color: #6b7280; cursor: pointer;
+    transition: all .15s;
+  }
+  .pill:hover { border-color: #6366f1; color: #6366f1; background: rgba(99,102,241,0.05); }
+  .pill.active { background: linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff; border-color:transparent; box-shadow: 0 2px 10px rgba(99,102,241,0.3); }
+  .pill.active-orange { background: linear-gradient(135deg,#f97316,#ea580c); color:#fff; border-color:transparent; box-shadow: 0 2px 10px rgba(249,115,22,0.3); }
+
+  .table-wrap { overflow-x: auto; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+  thead tr { background: rgba(99,102,241,0.04); }
+  th {
+    text-align: left; padding: 11px 16px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
+    color: #9ca3af; white-space: nowrap; cursor: pointer; user-select: none;
+    transition: color .15s;
+    border-bottom: 1.5px solid rgba(99,102,241,0.09);
+  }
+  th:hover { color: #6366f1; }
+  th.sorted { color: #6366f1; }
+
+  td {
+    padding: 11px 16px;
+    border-bottom: 1px solid rgba(99,102,241,0.05);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 200px; font-weight: 500; color: #374151;
+    transition: background .1s;
+  }
+  tbody tr:hover td { background: rgba(99,102,241,0.035); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .cell-nombre { font-weight: 600; color: #111827; }
+
+  .tag-g95 {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 3px 10px; border-radius: 50px;
+    font-size: 12px; font-weight: 700;
+    color: #15803d; background: rgba(22,163,74,0.1);
+  }
+  .tag-g95.best { background: rgba(22,163,74,0.16); box-shadow: 0 0 0 1.5px rgba(22,163,74,0.28); }
+
+  .tag-diesel {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 3px 10px; border-radius: 50px;
+    font-size: 12px; font-weight: 700;
+    color: #c2410c; background: rgba(234,88,12,0.1);
+  }
+  .tag-diesel.best { background: rgba(234,88,12,0.16); box-shadow: 0 0 0 1.5px rgba(234,88,12,0.28); }
+
+  .vacio { color: #d1d5db; font-weight: 400; }
+
+  /* LOADING / ERROR */
+  .loading {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 80px 24px; gap: 16px; color: #9ca3af;
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid rgba(99,102,241,0.15);
+    border-top-color: #6366f1;
+    border-radius: 50%; animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 13px; font-weight: 600; }
+  .error-box { padding: 40px; text-align: center; color: #dc2626; font-weight: 600; }
+
+  footer { text-align: center; font-size: 11px; color: #9ca3af; font-weight: 500; margin-top: 20px; }
+  footer a { color: #6366f1; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .col-dir, .col-prov { display: none; }
+    td { max-width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="app">
+
+  <header>
+    <div class="header-left">
+      <div class="logo-icon">⛽</div>
+      <div class="logo-text">
+        <h1>Carburantes España</h1>
+        <p>Precios en tiempo real · Ministerio METUR</p>
+      </div>
+    </div>
+    <div class="live-badge">
+      <div class="dot"></div>
+      <span id="last-update">Cargando...</span>
+    </div>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card glass">
+      <span class="stat-emoji">🏪</span>
+      <div class="stat-label">Estaciones</div>
+      <div class="stat-value c-indigo" id="stat-total">—</div>
+    </div>
+    <div class="stat-card glass">
+      <span class="stat-emoji">🟢</span>
+      <div class="stat-label">Mínimo G95</div>
+      <div class="stat-value c-green" id="stat-min95">—</div>
+    </div>
+    <div class="stat-card glass">
+      <span class="stat-emoji">📊</span>
+      <div class="stat-label">Media G95</div>
+      <div class="stat-value c-green" id="stat-avg95">—</div>
+    </div>
+    <div class="stat-card glass">
+      <span class="stat-emoji">🟠</span>
+      <div class="stat-label">Mínimo Gasóleo</div>
+      <div class="stat-value c-orange" id="stat-mindiesel">—</div>
+    </div>
+    <div class="stat-card glass">
+      <span class="stat-emoji">📊</span>
+      <div class="stat-label">Media Gasóleo</div>
+      <div class="stat-value c-orange" id="stat-avgdiesel">—</div>
+    </div>
+  </div>
+
+  <div class="panel glass">
+    <div class="panel-label">Filtros</div>
+    <div class="filters-row">
+      <div class="fg">
+        <label>Provincia</label>
+        <select id="sel-provincia"><option value="">Todas las provincias</option></select>
+      </div>
+      <div class="fg">
+        <label>Municipio</label>
+        <select id="sel-municipio"><option value="">Todos los municipios</option></select>
+      </div>
+      <div class="filter-info" id="filter-count"></div>
+    </div>
+  </div>
+
+  <div class="table-panel glass">
+    <div class="table-toolbar">
+      <span class="toolbar-label">Ordenar:</span>
+      <button class="pill" data-sort="nombre">Nombre</button>
+      <button class="pill active" data-sort="g95">G95 ↑</button>
+      <button class="pill" data-sort="diesel">Gasóleo ↑</button>
+      <button class="pill" data-sort="municipio">Municipio</button>
+    </div>
+    <div class="table-wrap">
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Cargando datos del Ministerio...</div>
+      </div>
+      <div class="error-box" id="error-msg" style="display:none"></div>
+      <table id="tabla" style="display:none">
+        <thead>
+          <tr>
+            <th data-col="nombre">Nombre</th>
+            <th data-col="dir" class="col-dir">Dirección</th>
+            <th data-col="municipio">Municipio</th>
+            <th data-col="provincia" class="col-prov">Provincia</th>
+            <th data-col="g95">Gasolina 95</th>
+            <th data-col="diesel">Gasóleo A</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    Fuente: <a href="https://sedeaplicaciones.minetur.gob.es" target="_blank">Ministerio de Industria y Turismo</a>
+    &nbsp;·&nbsp; Refresco automático cada 30 minutos
+  </footer>
+
+</div>
+
+<script>
+const API = 'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/';
+let allData = [], sortCol = 'g95', sortDir = 1;
+
+const parsePrice = s => (!s||!s.trim()) ? null : parseFloat(s.replace(',','.'));
+const avg = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
+
+async function fetchData() {
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('tabla').style.display = 'none';
+  document.getElementById('error-msg').style.display = 'none';
+  try {
+    const res = await fetch(API);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    allData = json.ListaEESSPrecio || [];
+    document.getElementById('last-update').textContent = 'Actualizado: ' + (json.Fecha||'—');
+    buildFilters();
+    render();
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('tabla').style.display = 'table';
+  } catch(e) {
+    document.getElementById('loading').style.display = 'none';
+    const err = document.getElementById('error-msg');
+    err.style.display = 'block';
+    err.textContent = '⚠️ Error cargando datos: ' + e.message;
+  }
+}
+
+function buildFilters() {
+  const provincias = [...new Set(allData.map(d=>d.Provincia))].sort();
+  const sel = document.getElementById('sel-provincia');
+  sel.innerHTML = '<option value="">Todas las provincias</option>';
+  provincias.forEach(p => { const o=document.createElement('option'); o.value=p; o.textContent=p; sel.appendChild(o); });
+}
+
+function updateMunicipios() {
+  const prov = document.getElementById('sel-provincia').value;
+  const base = prov ? allData.filter(d=>d.Provincia===prov) : allData;
+  const municipios = [...new Set(base.map(d=>d.Municipio))].sort();
+  const sel = document.getElementById('sel-municipio');
+  sel.innerHTML = '<option value="">Todos los municipios</option>';
+  municipios.forEach(m => { const o=document.createElement('option'); o.value=m; o.textContent=m; sel.appendChild(o); });
+}
+
+function getFiltered() {
+  const prov = document.getElementById('sel-provincia').value;
+  const muni = document.getElementById('sel-municipio').value;
+  return allData.filter(d => (!prov||d.Provincia===prov) && (!muni||d.Municipio===muni));
+}
+
+function updateStats(f) {
+  const p95 = f.map(d=>parsePrice(d['Precio Gasolina 95 E5'])).filter(v=>v!==null);
+  const pd  = f.map(d=>parsePrice(d['Precio Gasoleo A'])).filter(v=>v!==null);
+  document.getElementById('stat-total').textContent     = f.length.toLocaleString('es');
+  document.getElementById('stat-min95').textContent     = p95.length ? Math.min(...p95).toFixed(3)+' €' : '—';
+  document.getElementById('stat-avg95').textContent     = p95.length ? avg(p95).toFixed(3)+' €' : '—';
+  document.getElementById('stat-mindiesel').textContent = pd.length  ? Math.min(...pd).toFixed(3)+' €'  : '—';
+  document.getElementById('stat-avgdiesel').textContent = pd.length  ? avg(pd).toFixed(3)+' €'  : '—';
+}
+
+function sortVal(d, col) {
+  const map = { nombre:d['Rótulo']||'', dir:d['Dirección']||'', municipio:d['Municipio']||'', provincia:d['Provincia']||'',
+    g95: parsePrice(d['Precio Gasolina 95 E5'])??99999, diesel: parsePrice(d['Precio Gasoleo A'])??99999 };
+  return map[col]??'';
+}
+
+function render() {
+  const filtered = getFiltered();
+  updateStats(filtered);
+  document.getElementById('filter-count').innerHTML = `<b>${filtered.length.toLocaleString('es')}</b> estaciones`;
+
+  const sorted = [...filtered].sort((a,b) => {
+    const va=sortVal(a,sortCol), vb=sortVal(b,sortCol);
+    return va<vb?-sortDir:va>vb?sortDir:0;
+  });
+
+  const min95     = Math.min(...filtered.map(d=>parsePrice(d['Precio Gasolina 95 E5'])??99999));
+  const minDiesel = Math.min(...filtered.map(d=>parsePrice(d['Precio Gasoleo A'])??99999));
+
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  sorted.forEach(d => {
+    const p95 = parsePrice(d['Precio Gasolina 95 E5']);
+    const pd  = parsePrice(d['Precio Gasoleo A']);
+    const g95html    = p95!==null ? `<span class="tag-g95${p95===min95?' best':''}">${p95===min95?'⭐ ':''}${p95.toFixed(3)} €</span>` : `<span class="vacio">—</span>`;
+    const dieselHtml = pd!==null  ? `<span class="tag-diesel${pd===minDiesel?' best':''}">${pd===minDiesel?'⭐ ':''}${pd.toFixed(3)} €</span>` : `<span class="vacio">—</span>`;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="cell-nombre" title="${d['Rótulo']||''}">${(d['Rótulo']||'').trim()||'—'}</td>
+      <td class="col-dir" title="${d['Dirección']||''}">${(d['Dirección']||'').trim()||'—'}</td>
+      <td>${(d['Municipio']||'').trim()}</td>
+      <td class="col-prov">${(d['Provincia']||'').trim()}</td>
+      <td>${g95html}</td>
+      <td>${dieselHtml}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('sel-provincia').addEventListener('change', () => { updateMunicipios(); render(); });
+document.getElementById('sel-municipio').addEventListener('change', render);
+document.querySelectorAll('.pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const col = btn.dataset.sort;
+    sortDir = sortCol===col ? sortDir*-1 : 1;
+    sortCol = col;
+    document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active','active-orange'));
+    btn.classList.add(col==='diesel'?'active-orange':'active');
+    render();
+  });
+});
+
+fetchData();
+setInterval(fetchData, 30*60*1000);
+</script>
+</body>
+</html>
