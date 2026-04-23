@@ -1,0 +1,29 @@
+{
+  "name": "Carburantes España",
+  "short_name": "Carburantes",
+  "description": "Precios de carburantes en tiempo real. Datos oficiales del Ministerio de Industria y Turismo.",
+  "start_url": "/gasolineras/",
+  "scope": "/gasolineras/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef2ff",
+  "theme_color": "#6366f1",
+  "lang": "es",
+  "categories": ["utilities", "travel"],
+  "icons": [
+    { "src": "icons/icon-72.png",   "sizes": "72x72",   "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-96.png",   "sizes": "96x96",   "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-128.png",  "sizes": "128x128", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-192.png",  "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png",  "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/screenshot.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Lista de gasolineras con precios"
+    }
+  ]
+}
