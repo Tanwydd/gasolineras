@@ -55,11 +55,13 @@
   .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.85)} }
 
+  /* PANEL FILTROS */
   .panel { border-radius: 18px; padding: 18px 20px; margin-bottom: 14px; }
   .panel-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 12px; }
   .filters-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
   .fg { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 170px; max-width: 260px; }
   .fg label { font-size: 12px; font-weight: 600; color: #374151; }
+
   select {
     background: rgba(255,255,255,0.75); border: 1.5px solid rgba(99,102,241,0.15); border-radius: 10px;
     color: #1e1e2e; font-family: inherit; font-size: 13px; font-weight: 500;
@@ -69,9 +71,83 @@
     background-repeat: no-repeat; background-position: right 12px center; width: 100%;
   }
   select:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.12); }
+
+  /* MUNICIPIOS MULTI-SELECT */
+  .municipios-wrap {
+    position: relative; flex: 1; min-width: 220px; max-width: 400px;
+  }
+  .municipios-wrap label { font-size: 12px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px; }
+  .municipios-input {
+    display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
+    background: rgba(255,255,255,0.75); border: 1.5px solid rgba(99,102,241,0.15); border-radius: 10px;
+    padding: 6px 10px; cursor: text; min-height: 40px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .municipios-input.focused { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.12); }
+
+  .muni-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: linear-gradient(135deg,#6366f1,#8b5cf6); color: #fff;
+    font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 50px;
+    white-space: nowrap;
+  }
+  .muni-tag button {
+    background: none; border: none; color: #fff; cursor: pointer;
+    font-size: 13px; line-height: 1; padding: 0; opacity: .8;
+  }
+  .muni-tag button:hover { opacity: 1; }
+
+  .muni-search {
+    border: none; outline: none; background: transparent;
+    font-family: inherit; font-size: 13px; font-weight: 500; color: #1e1e2e;
+    min-width: 80px; flex: 1;
+  }
+  .muni-search::placeholder { color: #9ca3af; }
+
+  .muni-dropdown {
+    position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 100;
+    background: white; border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(99,102,241,0.15), 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid rgba(99,102,241,0.1);
+    max-height: 220px; overflow-y: auto; display: none;
+  }
+  .muni-dropdown.open { display: block; }
+  .muni-option {
+    padding: 9px 14px; font-size: 13px; font-weight: 500; color: #374151;
+    cursor: pointer; transition: background .1s;
+  }
+  .muni-option:hover, .muni-option.highlighted { background: rgba(99,102,241,0.06); color: #4f46e5; }
+  .muni-option.selected { color: #6366f1; font-weight: 600; }
+  .muni-empty { padding: 12px 14px; font-size: 12px; color: #9ca3af; text-align: center; }
+
+  /* BOTÓN CERCA */
+  .btn-cerca {
+    font-family: inherit; font-size: 13px; font-weight: 600;
+    padding: 9px 18px; border-radius: 10px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff; border: none; cursor: pointer;
+    box-shadow: 0 2px 12px rgba(99,102,241,0.3);
+    transition: transform .15s, box-shadow .15s;
+    white-space: nowrap; align-self: flex-end;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-cerca:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(99,102,241,0.4); }
+  .btn-cerca:active { transform: translateY(0); }
+  .btn-cerca.loading { opacity: .7; pointer-events: none; }
+
   .filter-info { font-size: 13px; color: #6b7280; font-weight: 500; align-self: center; white-space: nowrap; }
   .filter-info b { color: #6366f1; }
 
+  /* MODO BADGE */
+  .mode-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 50px;
+    margin-left: 8px;
+  }
+  .mode-badge.cerca { background: rgba(99,102,241,0.1); color: #4f46e5; }
+  .mode-badge.full  { background: rgba(107,114,128,0.1); color: #6b7280; }
+
+  /* TABLA */
   .table-panel { border-radius: 18px; overflow: hidden; margin-bottom: 20px; }
   .table-toolbar {
     display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
@@ -106,6 +182,7 @@
   tbody tr:hover td { background: rgba(99,102,241,0.05); }
   tbody tr:last-child td { border-bottom: none; }
   .cell-nombre { font-weight: 600; color: #111827; }
+  .cell-dist { color: #6366f1; font-weight: 700; font-size: 12px; }
 
   .tag-g95 {
     display: inline-flex; align-items: center; gap: 3px; padding: 3px 10px; border-radius: 50px;
@@ -154,10 +231,7 @@
     transition: transform .22s cubic-bezier(.34,1.56,.64,1); overflow: hidden;
   }
   .modal-overlay.open .modal { transform: translateY(0) scale(1); }
-  .modal-header {
-    padding: 24px 24px 0;
-    display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
-  }
+  .modal-header { padding: 24px 24px 0; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
   .modal-header-left { flex: 1; min-width: 0; }
   .modal-rotulo { font-size: 19px; font-weight: 700; color: #111827; letter-spacing: -0.3px; }
   .modal-address { font-size: 12px; color: #6b7280; font-weight: 500; margin-top: 4px; }
@@ -174,10 +248,7 @@
     background: rgba(99,102,241,0.07); color: #4f46e5; border: 1px solid rgba(99,102,241,0.12);
   }
   .modal-body { padding: 16px 24px; overflow-y: auto; flex: 1; }
-  .fuel-section-title {
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: #9ca3af; margin-bottom: 10px;
-  }
+  .fuel-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 10px; }
   .fuel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
   .fuel-item {
     display: flex; align-items: center; justify-content: space-between;
@@ -191,10 +262,7 @@
   .fp-blue   { color: #2563eb; }
   .fp-purple { color: #7c3aed; }
   .fp-gray   { color: #6b7280; }
-  .modal-footer {
-    padding: 16px 24px; border-top: 1px solid rgba(99,102,241,0.08);
-    display: flex; justify-content: flex-end;
-  }
+  .modal-footer { padding: 16px 24px; border-top: 1px solid rgba(99,102,241,0.08); display: flex; justify-content: flex-end; }
   .btn-maps {
     display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 12px;
     background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;
@@ -204,7 +272,7 @@
   }
   .btn-maps:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(99,102,241,0.45); }
 
-  @media (max-width: 600px) { td { max-width: 130px; } }
+  @media (max-width: 600px) { td { max-width: 130px; } .municipios-wrap { max-width: 100%; } }
 </style>
 </head>
 <body>
@@ -231,14 +299,27 @@
   <div class="panel glass">
     <div class="panel-label">Filtros</div>
     <div class="filters-row">
+
+      <!-- Provincia -->
       <div class="fg">
         <label>Provincia</label>
         <select id="sel-provincia"><option value="">Todas las provincias</option></select>
       </div>
-      <div class="fg">
-        <label>Municipio</label>
-        <select id="sel-municipio"><option value="">Todos los municipios</option></select>
+
+      <!-- Municipios multi-select -->
+      <div class="municipios-wrap">
+        <label>Municipios <span id="muni-count-label" style="color:#9ca3af;font-weight:400"></span></label>
+        <div class="municipios-input" id="muni-input-box">
+          <input class="muni-search" id="muni-search" placeholder="Buscar municipio..." autocomplete="off">
+        </div>
+        <div class="muni-dropdown" id="muni-dropdown"></div>
       </div>
+
+      <!-- Botón cerca -->
+      <button class="btn-cerca" id="btn-cerca">
+        📍 Cerca de mí
+      </button>
+
       <div class="filter-info" id="filter-count"></div>
     </div>
   </div>
@@ -246,6 +327,7 @@
   <div class="table-panel glass">
     <div class="table-toolbar">
       <span class="toolbar-label">Ordenar:</span>
+      <button class="pill" data-sort="dist">📍 Distancia</button>
       <button class="pill" data-sort="nombre">Nombre</button>
       <button class="pill active" data-sort="g95">G95 ↑</button>
       <button class="pill" data-sort="diesel">Gasóleo ↑</button>
@@ -259,7 +341,7 @@
       <div class="error-box" id="error-msg" style="display:none"></div>
       <table id="tabla" style="display:none">
         <thead>
-          <tr>
+          <tr id="thead-row">
             <th>Nombre</th><th>Municipio</th><th>Gasóleo A</th><th>Gasolina 95</th>
           </tr>
         </thead>
@@ -297,8 +379,10 @@
 <script>
 var API = 'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/';
 var allData = [], sortCol = 'g95', sortDir = 1, currentSorted = [];
+var userLat = null, userLon = null, geoMode = false;
+var selectedMunicipios = []; // array de strings
 
-var parsePrice = function(s) { return (!s || !s.trim()) ? null : parseFloat(s.replace(',','.')); };
+var parsePrice = function(s) { return (!s||!s.trim()) ? null : parseFloat(s.replace(',','.')); };
 
 var FUELS = [
   { key: 'Precio Gasolina 95 E5',             label: 'Gasolina 95 E5',      color: 'fp-green'  },
@@ -316,6 +400,24 @@ var FUELS = [
   { key: 'Precio Hidrogeno',                   label: 'Hidrógeno',           color: 'fp-gray'   },
 ];
 
+// ── HAVERSINE ─────────────────────────────────────────
+function haversine(lat1, lon1, lat2, lon2) {
+  var R = 6371;
+  var dLat = (lat2 - lat1) * Math.PI / 180;
+  var dLon = (lon2 - lon1) * Math.PI / 180;
+  var a = Math.sin(dLat/2)*Math.sin(dLat/2) +
+          Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*
+          Math.sin(dLon/2)*Math.sin(dLon/2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function getCoords(d) {
+  var lat = parseFloat((d['Latitud']||'').replace(',','.'));
+  var lon = parseFloat((d['Longitud (WGS84)']||d['Longitud']||'').replace(',','.'));
+  return isNaN(lat)||isNaN(lon) ? null : { lat: lat, lon: lon };
+}
+
+// ── FETCH ─────────────────────────────────────────────
 async function fetchData() {
   document.getElementById('loading').style.display = 'flex';
   document.getElementById('tabla').style.display = 'none';
@@ -325,11 +427,13 @@ async function fetchData() {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var json = await res.json();
     allData = json.ListaEESSPrecio || [];
-    document.getElementById('last-update').textContent = 'Actualizado: ' + (json.Fecha || '—');
-    buildFilters();
+    document.getElementById('last-update').textContent = 'Actualizado: ' + (json.Fecha||'—');
+    buildProvinciaFilter();
     render();
     document.getElementById('loading').style.display = 'none';
     document.getElementById('tabla').style.display = 'table';
+    // Intentar geolocalización automática al cargar
+    tryGeoAuto();
   } catch(e) {
     document.getElementById('loading').style.display = 'none';
     var err = document.getElementById('error-msg');
@@ -338,7 +442,70 @@ async function fetchData() {
   }
 }
 
-function buildFilters() {
+// ── GEOLOCALIZACIÓN ───────────────────────────────────
+function tryGeoAuto() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      userLat = pos.coords.latitude;
+      userLon = pos.coords.longitude;
+      geoMode = true;
+      sortCol = 'dist'; sortDir = 1;
+      // Desmarcar pills, activar distancia
+      document.querySelectorAll('.pill').forEach(function(b){ b.classList.remove('active','active-orange'); });
+      document.querySelector('[data-sort="dist"]').classList.add('active');
+      updateTheadForGeo(true);
+      render();
+    },
+    function() { /* sin permiso: vista completa normal */ },
+    { timeout: 5000 }
+  );
+}
+
+document.getElementById('btn-cerca').addEventListener('click', function() {
+  if (!navigator.geolocation) {
+    alert('Tu navegador no soporta geolocalización.');
+    return;
+  }
+  var btn = document.getElementById('btn-cerca');
+  btn.classList.add('loading');
+  btn.textContent = '⏳ Localizando...';
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      userLat = pos.coords.latitude;
+      userLon = pos.coords.longitude;
+      geoMode = true;
+      sortCol = 'dist'; sortDir = 1;
+      document.querySelectorAll('.pill').forEach(function(b){ b.classList.remove('active','active-orange'); });
+      document.querySelector('[data-sort="dist"]').classList.add('active');
+      updateTheadForGeo(true);
+      render();
+      btn.classList.remove('loading');
+      btn.innerHTML = '📍 Cerca de mí';
+    },
+    function(err) {
+      btn.classList.remove('loading');
+      btn.innerHTML = '📍 Cerca de mí';
+      geoMode = false;
+      updateTheadForGeo(false);
+      alert('No se pudo obtener tu ubicación. Mostrando todas las estaciones.');
+      render();
+    },
+    { timeout: 8000 }
+  );
+});
+
+function updateTheadForGeo(geo) {
+  var row = document.getElementById('thead-row');
+  if (geo) {
+    row.innerHTML = '<th>Distancia</th><th>Nombre</th><th>Municipio</th><th>Gasóleo A</th><th>Gasolina 95</th>';
+  } else {
+    row.innerHTML = '<th>Nombre</th><th>Municipio</th><th>Gasóleo A</th><th>Gasolina 95</th>';
+  }
+}
+
+// ── FILTROS ───────────────────────────────────────────
+function buildProvinciaFilter() {
   var provincias = [...new Set(allData.map(function(d){ return d.Provincia; }))].sort();
   var sel = document.getElementById('sel-provincia');
   sel.innerHTML = '<option value="">Todas las provincias</option>';
@@ -347,26 +514,27 @@ function buildFilters() {
   });
 }
 
-function updateMunicipios() {
+function getMunicipiosPorProvincia() {
   var prov = document.getElementById('sel-provincia').value;
   var base = prov ? allData.filter(function(d){ return d.Provincia === prov; }) : allData;
-  var municipios = [...new Set(base.map(function(d){ return d.Municipio; }))].sort();
-  var sel = document.getElementById('sel-municipio');
-  sel.innerHTML = '<option value="">Todos los municipios</option>';
-  municipios.forEach(function(m) {
-    var o = document.createElement('option'); o.value = m; o.textContent = m; sel.appendChild(o);
-  });
+  return [...new Set(base.map(function(d){ return d.Municipio; }))].sort();
 }
 
 function getFiltered() {
   var prov = document.getElementById('sel-provincia').value;
-  var muni = document.getElementById('sel-municipio').value;
   return allData.filter(function(d) {
-    return (!prov || d.Provincia === prov) && (!muni || d.Municipio === muni);
+    if (prov && d.Provincia !== prov) return false;
+    if (selectedMunicipios.length > 0 && selectedMunicipios.indexOf(d.Municipio) === -1) return false;
+    return true;
   });
 }
 
 function sortVal(d, col) {
+  if (col === 'dist') {
+    if (!geoMode || !userLat) return 99999;
+    var c = getCoords(d);
+    return c ? haversine(userLat, userLon, c.lat, c.lon) : 99999;
+  }
   if (col === 'g95')      return parsePrice(d['Precio Gasolina 95 E5']) || 99999;
   if (col === 'diesel')   return parsePrice(d['Precio Gasoleo A']) || 99999;
   if (col === 'nombre')   return d['Rótulo'] || '';
@@ -374,17 +542,30 @@ function sortVal(d, col) {
   return '';
 }
 
+// ── RENDER ────────────────────────────────────────────
 function render() {
   var filtered = getFiltered();
-  document.getElementById('filter-count').innerHTML = '<b>' + filtered.length.toLocaleString('es') + '</b> estaciones';
 
-  currentSorted = filtered.slice().sort(function(a, b) {
+  // En modo geo, limitar a 50 más cercanas
+  var display = filtered;
+  if (geoMode && sortCol === 'dist') {
+    display = filtered.slice().sort(function(a,b){
+      return sortVal(a,'dist') - sortVal(b,'dist');
+    }).slice(0, 50);
+  }
+
+  var label = geoMode && sortCol === 'dist'
+    ? '<b>' + display.length + '</b> más cercanas'
+    : '<b>' + filtered.length.toLocaleString('es') + '</b> estaciones';
+  document.getElementById('filter-count').innerHTML = label;
+
+  currentSorted = display.slice().sort(function(a,b) {
     var va = sortVal(a, sortCol), vb = sortVal(b, sortCol);
     return va < vb ? -sortDir : va > vb ? sortDir : 0;
   });
 
-  var min95     = Math.min.apply(null, filtered.map(function(d){ return parsePrice(d['Precio Gasolina 95 E5']) || 99999; }));
-  var minDiesel = Math.min.apply(null, filtered.map(function(d){ return parsePrice(d['Precio Gasoleo A']) || 99999; }));
+  var min95     = Math.min.apply(null, display.map(function(d){ return parsePrice(d['Precio Gasolina 95 E5']) || 99999; }));
+  var minDiesel = Math.min.apply(null, display.map(function(d){ return parsePrice(d['Precio Gasoleo A']) || 99999; }));
 
   var tbody = document.getElementById('tbody');
   tbody.innerHTML = '';
@@ -394,24 +575,41 @@ function render() {
     var pd  = parsePrice(d['Precio Gasoleo A']);
 
     var g95html = p95 !== null
-      ? '<span class="tag-g95' + (p95 === min95 ? ' best' : '') + '">' + (p95 === min95 ? '⭐ ' : '') + p95.toFixed(3) + ' €</span>'
+      ? '<span class="tag-g95' + (p95===min95?' best':'') + '">' + (p95===min95?'⭐ ':'') + p95.toFixed(3) + ' €</span>'
       : '<span class="vacio">—</span>';
     var dhtml = pd !== null
-      ? '<span class="tag-diesel' + (pd === minDiesel ? ' best' : '') + '">' + (pd === minDiesel ? '⭐ ' : '') + pd.toFixed(3) + ' €</span>'
+      ? '<span class="tag-diesel' + (pd===minDiesel?' best':'') + '">' + (pd===minDiesel?'⭐ ':'') + pd.toFixed(3) + ' €</span>'
       : '<span class="vacio">—</span>';
 
     var tr = document.createElement('tr');
     tr.title = 'Pulsa para ver todos los combustibles';
-    tr.innerHTML =
-      '<td class="cell-nombre" title="' + (d['Rótulo']||'') + '">' + ((d['Rótulo']||'').trim()||'—') + '</td>' +
-      '<td>' + (d['Municipio']||'').trim() + '</td>' +
-      '<td>' + dhtml + '</td>' +
-      '<td>' + g95html + '</td>';
+
+    if (geoMode) {
+      var c = getCoords(d);
+      var dist = c ? haversine(userLat, userLon, c.lat, c.lon) : null;
+      var distHtml = dist !== null
+        ? '<span class="cell-dist">' + (dist < 1 ? (dist*1000).toFixed(0)+'m' : dist.toFixed(1)+' km') + '</span>'
+        : '<span class="vacio">—</span>';
+      tr.innerHTML =
+        '<td>' + distHtml + '</td>' +
+        '<td class="cell-nombre" title="' + (d['Rótulo']||'') + '">' + ((d['Rótulo']||'').trim()||'—') + '</td>' +
+        '<td>' + (d['Municipio']||'').trim() + '</td>' +
+        '<td>' + dhtml + '</td>' +
+        '<td>' + g95html + '</td>';
+    } else {
+      tr.innerHTML =
+        '<td class="cell-nombre" title="' + (d['Rótulo']||'') + '">' + ((d['Rótulo']||'').trim()||'—') + '</td>' +
+        '<td>' + (d['Municipio']||'').trim() + '</td>' +
+        '<td>' + dhtml + '</td>' +
+        '<td>' + g95html + '</td>';
+    }
+
     tr.addEventListener('click', (function(idx){ return function(){ openModal(currentSorted[idx]); }; })(i));
     tbody.appendChild(tr);
   });
 }
 
+// ── MODAL ─────────────────────────────────────────────
 function openModal(d) {
   document.getElementById('modal-rotulo').textContent = (d['Rótulo']||'Sin nombre').trim();
   document.getElementById('modal-address').textContent =
@@ -419,11 +617,20 @@ function openModal(d) {
 
   var meta = document.getElementById('modal-meta');
   meta.innerHTML = '';
-  [
+  var metaTags = [
     d['Horario']    ? '🕐 ' + d['Horario'].trim()   : null,
     d['Tipo Venta'] ? d['Tipo Venta'].trim()         : null,
     d['Margen']     ? 'Margen ' + d['Margen'].trim() : null,
-  ].filter(Boolean).forEach(function(txt) {
+  ];
+  if (geoMode) {
+    var c = getCoords(d);
+    if (c) {
+      var dist = haversine(userLat, userLon, c.lat, c.lon);
+      var distStr = dist < 1 ? (dist*1000).toFixed(0)+'m' : dist.toFixed(1)+' km';
+      metaTags.unshift('📍 ' + distStr);
+    }
+  }
+  metaTags.filter(Boolean).forEach(function(txt) {
     var s = document.createElement('span'); s.className = 'meta-tag'; s.textContent = txt; meta.appendChild(s);
   });
 
@@ -464,19 +671,127 @@ function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
-
 document.getElementById('modal-close').addEventListener('click', closeModal);
 document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
-document.getElementById('sel-provincia').addEventListener('change', function() { updateMunicipios(); render(); });
-document.getElementById('sel-municipio').addEventListener('change', render);
+// ── MULTI-SELECT MUNICIPIOS ───────────────────────────
+var muniSearch   = document.getElementById('muni-search');
+var muniBox      = document.getElementById('muni-input-box');
+var muniDropdown = document.getElementById('muni-dropdown');
+var hiIndex = -1;
+
+function getMunicipiosSuggestions(q) {
+  var all = getMunicipiosPorProvincia();
+  var lower = q.toLowerCase();
+  return all.filter(function(m) {
+    return m.toLowerCase().includes(lower) && selectedMunicipios.indexOf(m) === -1;
+  }).slice(0, 40);
+}
+
+function renderDropdown(q) {
+  var sugs = getMunicipiosSuggestions(q);
+  muniDropdown.innerHTML = '';
+  hiIndex = -1;
+  if (!sugs.length) {
+    muniDropdown.innerHTML = '<div class="muni-empty">Sin resultados</div>';
+  } else {
+    sugs.forEach(function(m, idx) {
+      var div = document.createElement('div');
+      div.className = 'muni-option';
+      div.textContent = m;
+      div.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        addMunicipio(m);
+      });
+      muniDropdown.appendChild(div);
+    });
+  }
+  muniDropdown.classList.add('open');
+}
+
+function addMunicipio(m) {
+  if (selectedMunicipios.indexOf(m) !== -1) return;
+  selectedMunicipios.push(m);
+  muniSearch.value = '';
+  muniDropdown.classList.remove('open');
+  renderTags();
+  updateMuniLabel();
+  render();
+}
+
+function removeMunicipio(m) {
+  selectedMunicipios = selectedMunicipios.filter(function(x){ return x !== m; });
+  renderTags();
+  updateMuniLabel();
+  render();
+}
+
+function renderTags() {
+  // Eliminar tags existentes
+  var existing = muniBox.querySelectorAll('.muni-tag');
+  existing.forEach(function(t){ t.remove(); });
+  // Añadir antes del input
+  selectedMunicipios.forEach(function(m) {
+    var tag = document.createElement('span');
+    tag.className = 'muni-tag';
+    tag.innerHTML = m + '<button type="button" aria-label="Eliminar">×</button>';
+    tag.querySelector('button').addEventListener('click', function(){ removeMunicipio(m); });
+    muniBox.insertBefore(tag, muniSearch);
+  });
+}
+
+function updateMuniLabel() {
+  var lbl = document.getElementById('muni-count-label');
+  lbl.textContent = selectedMunicipios.length ? '(' + selectedMunicipios.length + ' seleccionado' + (selectedMunicipios.length>1?'s':'') + ')' : '';
+}
+
+muniSearch.addEventListener('focus', function() {
+  muniBox.classList.add('focused');
+  renderDropdown(muniSearch.value);
+});
+muniSearch.addEventListener('blur', function() {
+  muniBox.classList.remove('focused');
+  setTimeout(function(){ muniDropdown.classList.remove('open'); }, 150);
+});
+muniSearch.addEventListener('input', function() {
+  renderDropdown(muniSearch.value);
+});
+muniSearch.addEventListener('keydown', function(e) {
+  var opts = muniDropdown.querySelectorAll('.muni-option');
+  if (e.key === 'ArrowDown') {
+    hiIndex = Math.min(hiIndex+1, opts.length-1);
+    opts.forEach(function(o,i){ o.classList.toggle('highlighted', i===hiIndex); });
+  } else if (e.key === 'ArrowUp') {
+    hiIndex = Math.max(hiIndex-1, 0);
+    opts.forEach(function(o,i){ o.classList.toggle('highlighted', i===hiIndex); });
+  } else if (e.key === 'Enter') {
+    if (hiIndex >= 0 && opts[hiIndex]) addMunicipio(opts[hiIndex].textContent);
+  } else if (e.key === 'Backspace' && muniSearch.value === '' && selectedMunicipios.length) {
+    removeMunicipio(selectedMunicipios[selectedMunicipios.length-1]);
+  }
+});
+muniBox.addEventListener('click', function(){ muniSearch.focus(); });
+
+// ── EVENTOS FILTROS ───────────────────────────────────
+document.getElementById('sel-provincia').addEventListener('change', function() {
+  selectedMunicipios = [];
+  renderTags();
+  updateMuniLabel();
+  geoMode = false;
+  updateTheadForGeo(false);
+  render();
+});
 
 document.querySelectorAll('.pill').forEach(function(btn) {
   btn.addEventListener('click', function() {
     var col = btn.dataset.sort;
+    if (col === 'dist' && !geoMode) {
+      document.getElementById('btn-cerca').click();
+      return;
+    }
     sortDir = (sortCol === col) ? sortDir * -1 : 1;
     sortCol = col;
     document.querySelectorAll('.pill').forEach(function(b){ b.classList.remove('active','active-orange'); });
